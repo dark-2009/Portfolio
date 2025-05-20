@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -179,5 +180,88 @@
     <footer>© 2025 DARK. All Rights Reserved.</footer>
   </div>
 
+  <!-- Background Music -->
+  <audio id="bg-music" loop>
+    <source src="bg-music.mp3" type="audio/mpeg" />
+    Your browser does not support the audio element.
+  </audio>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const audio = document.getElementById('bg-music');
+
+      function enableAudio() {
+        audio.play().catch(err => console.log('Autoplay blocked:', err));
+        document.removeEventListener('click', enableAudio);
+        document.removeEventListener('keydown', enableAudio);
+      }
+
+      document.addEventListener('click', enableAudio);
+      document.addEventListener('keydown', enableAudio);
+    });
+  </script>
+
+
+  <!-- Music Toggle Button -->
+  <div id="music-toggle" title="Toggle Music"></div>
+
+  <style>
+    #music-toggle {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      width: 20px;
+      height: 20px;
+      background: white;
+      border: 2px solid black;
+      border-radius: 50%;
+      cursor: pointer;
+      z-index: 1000;
+      transition: background 0.3s, transform 0.2s;
+    }
+
+    #music-toggle.playing {
+      background: black;
+      border-color: white;
+      transform: scale(1.1);
+    }
+
+    #music-toggle:hover {
+      transform: scale(1.2);
+    }
+  </style>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const audio = document.getElementById('bg-music');
+      const toggle = document.getElementById('music-toggle');
+
+      function enableAudio() {
+        audio.play().catch(err => console.log('Autoplay blocked:', err));
+        document.removeEventListener('click', enableAudio);
+        document.removeEventListener('keydown', enableAudio);
+      }
+
+      document.addEventListener('click', enableAudio);
+      document.addEventListener('keydown', enableAudio);
+
+      toggle.addEventListener('click', function (e) {
+        e.stopPropagation(); // prevent from triggering enableAudio again
+        if (audio.paused) {
+          audio.play();
+          toggle.classList.add('playing');
+        } else {
+          audio.pause();
+          toggle.classList.remove('playing');
+        }
+      });
+
+      // Set initial button state
+      audio.addEventListener('play', () => toggle.classList.add('playing'));
+      audio.addEventListener('pause', () => toggle.classList.remove('playing'));
+    });
+  </script>
+
 </body>
+
 </html>
